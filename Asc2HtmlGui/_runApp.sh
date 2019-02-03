@@ -1,2 +1,2 @@
-open release/bundles/Notes.app
+open release/bundles/Asc2Html.app
 

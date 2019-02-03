@@ -1,12 +1,40 @@
 # AsciiDoc to HTML
 
-As its name implies, this Scala project converts
-an AsciiDoc file to HTML.
+As its name implies, this Scala project converts AsciiDoc to HTML.
+
+
+## A sample conversion
+
+As an example of what this code does, it converts AsciiDoc
+that looks like this:
+
+````
+= Hello
+
+== Hello, world
+
+Ipsum lorem whatev ...
+
+[source,scala]
+----
+println("Hello")
+----
+````
+
+and converts it into HTML that looks like this:
+
+````
+<h2 id="_hello_world">Hello, world</h2>   
+
+<p>Ipsum lorem whatev …​</p>    
+
+<pre><code class="language-scala" data-lang="scala">println("Hello")</code></pre>
+````
 
 
 ## Update
 
-The project is now broken up into three components:
+The project is broken up into three components:
 
 - Common code
 - The command line shell script
@@ -70,8 +98,9 @@ require you to have [Asciidoctor](https://asciidoctor.org/)
 installed; I’m not sure about that because I installed Asciidoctor 
 first.
 
-This project also uses JSoup to clean up the HTML
-that’s created by AsciidoctorJ. AsciidoctorJ includes
+This project also uses [JSoup](https://jsoup.org/) to clean up 
+the HTML that’s created by AsciidoctorJ. AsciidoctorJ does a great
+job of converting AsciiDoc to HTML, but its HTML includes
 *a lot* of DIV and SPAN tags and many attributes, and since
 I don’t want those things — and I can’t see any way to remove
 them — I remove them with JSoup.
@@ -79,3 +108,5 @@ them — I remove them with JSoup.
 
 
   
+
+
