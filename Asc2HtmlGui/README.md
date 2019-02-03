@@ -3,6 +3,9 @@
 This is the GUI for my “AsciiDoc to HTML” conversion
 application.
 
+One disclaimer: I’m not a JavaFX expert, I just know
+how to cobble a few things together.
+
 
 ## Requirements
 
