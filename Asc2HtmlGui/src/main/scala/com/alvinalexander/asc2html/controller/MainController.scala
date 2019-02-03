@@ -1,10 +1,10 @@
 package com.alvinalexander.asc2html.controller
 
-import com.alvinalexander.asc2html.actions.ConvertButtonHandler
+import com.alvinalexander.asc2html.actions.{ConvertButtonHandler, PreviewButtonHandler}
 import javafx.scene.Scene
 import javafx.scene.input._
 import javafx.stage.Stage
-import com.alvinalexander.asc2html.view.{HtmlDialogPane, GuiUtils, MainGridPane}
+import com.alvinalexander.asc2html.view.{GuiUtils, HtmlDialogPane, MainGridPane}
 
 /**
   * This is the main “controller” (as in MVC) for the application.
@@ -14,11 +14,17 @@ class MainController {
     val mainGridPane = new MainGridPane()
 
     // connect to these widgets so we can handle their events
-    private val textArea         = mainGridPane.textArea
-    private val convertAscButton = mainGridPane.convertAscButton
+    private val textArea          = mainGridPane.textArea
+    private val convertA2HButton  = mainGridPane.convertButton
+    private val previewHtmlButton = mainGridPane.previewButton
 
+    // wire up convert button
     private val convertButtonHandler = new ConvertButtonHandler(this)
-    convertAscButton.setOnAction(convertButtonHandler)
+    convertA2HButton.setOnAction(convertButtonHandler)
+
+    // wire up preview button
+    private val previewButtonHandler = new PreviewButtonHandler(this)
+    previewHtmlButton.setOnAction(previewButtonHandler)
 
     // get a reference to the main scene so we can add listeners to it
     def addKeystrokeHandlers(scene: Scene, stage: Stage): Unit = {

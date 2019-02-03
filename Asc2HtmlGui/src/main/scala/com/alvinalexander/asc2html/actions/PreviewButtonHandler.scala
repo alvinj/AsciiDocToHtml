@@ -7,9 +7,7 @@ import scala.concurrent.ExecutionContext.Implicits.global
 import asc2html.Asc2HtmlUtils
 import javafx.event.{ActionEvent, EventHandler}
 import com.alvinalexander.asc2html.controller.MainController
-import com.alvinalexander.asc2html.view.{GuiUtils, HtmlDialogPane}
-import javafx.application.Platform
-import javafx.concurrent.Task
+import com.alvinalexander.asc2html.view.{GuiUtils, HtmlPreviewerPane}
 import org.asciidoctor.Asciidoctor
 import org.jsoup.Jsoup
 import org.jsoup.safety.Whitelist
@@ -17,8 +15,9 @@ import javafx.application.Platform
 
 import scala.util.{Failure, Success}
 
-class ConvertButtonHandler (mainController: MainController)
-extends EventHandler[ActionEvent] {
+//TODO This class is basically a copy and paste of ConverButtonHandler; make it DRY.
+class PreviewButtonHandler (mainController: MainController)
+    extends EventHandler[ActionEvent] {
 
     override def handle(event: ActionEvent): Unit = {
 
@@ -40,9 +39,10 @@ extends EventHandler[ActionEvent] {
     private def updateGui(html: String): Unit = {
         val runnable = new Runnable {
             override def run(): Unit = {
-                val htmlPane = new HtmlDialogPane
-                htmlPane.htmlTextArea.setText(html)
-                GuiUtils.showHtmlDialog("Your HTML", htmlPane)
+                val previewPane = new HtmlPreviewerPane
+                val webEngine = previewPane.webView.getEngine
+                webEngine.loadContent(html)
+                GuiUtils.showHtmlDialog("HTML Preview", previewPane)
             }
         }
         Platform.runLater(runnable)

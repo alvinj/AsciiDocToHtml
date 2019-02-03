@@ -2,22 +2,20 @@ package com.alvinalexander.asc2html.actions
 
 import java.util.{HashMap => JHashMap}
 
-import scala.concurrent.{Future => ConcurrentTask}
-import scala.concurrent.ExecutionContext.Implicits.global
 import asc2html.Asc2HtmlUtils
-import javafx.event.{ActionEvent, EventHandler}
 import com.alvinalexander.asc2html.controller.MainController
 import com.alvinalexander.asc2html.view.{GuiUtils, HtmlDialogPane}
 import javafx.application.Platform
-import javafx.concurrent.Task
+import javafx.event.{ActionEvent, EventHandler}
 import org.asciidoctor.Asciidoctor
 import org.jsoup.Jsoup
 import org.jsoup.safety.Whitelist
-import javafx.application.Platform
 
+import scala.concurrent.ExecutionContext.Implicits.global
+import scala.concurrent.{Future => ConcurrentTask}
 import scala.util.{Failure, Success}
 
-class ConvertButtonHandler (mainController: MainController)
+class BaseHandler(mainController: MainController)
 extends EventHandler[ActionEvent] {
 
     override def handle(event: ActionEvent): Unit = {

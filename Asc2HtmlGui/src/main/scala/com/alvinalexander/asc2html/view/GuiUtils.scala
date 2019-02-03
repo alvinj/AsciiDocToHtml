@@ -4,6 +4,7 @@ import javafx.application.Platform
 import javafx.geometry.Rectangle2D
 import javafx.scene.control.ButtonBar.ButtonData
 import javafx.scene.control.{ButtonType, Dialog}
+import javafx.scene.layout.GridPane
 import javafx.stage.Screen
 
 object GuiUtils {
@@ -14,21 +15,20 @@ object GuiUtils {
 
     def showHtmlDialog(
         title: String = "Your HTML",
-        htmlPane: HtmlDialogPane
+        htmlPane: GridPane
     ): Unit = {
 
-        // create the "Edit Note" dialog
-        val htmlDialog = new Dialog[Unit]()
-        htmlDialog.setTitle(title)
+        val dialog = new Dialog[Unit]()
+        dialog.setTitle(title)
         val okButton = new ButtonType("OK", ButtonData.OK_DONE)
-        htmlDialog.getDialogPane.getButtonTypes.addAll(okButton)
-        htmlDialog.getDialogPane.setContent(htmlPane)
-        htmlDialog.setResizable(true)
+        dialog.getDialogPane.getButtonTypes.addAll(okButton)
+        dialog.getDialogPane.setContent(htmlPane)
+        dialog.setResizable(true)
 
-        // set initial focus
-        Platform.runLater(() => htmlPane.htmlTextArea.requestFocus)
+        // TODO helps to use this with TextAreas
+        //Platform.runLater(() => htmlPane.htmlTextArea.requestFocus)
 
-        val result = htmlDialog.showAndWait()
+        val result = dialog.showAndWait()
 
     }
 

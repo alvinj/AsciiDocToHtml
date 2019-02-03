@@ -22,12 +22,15 @@ class MainGridPane() extends GridPane {
     scrollPane.setFitToWidth(true)
     scrollPane.setFitToHeight(true)
 
-    val convertAscButton = new Button("Convert")
-    convertAscButton.setTooltip(new Tooltip("Convert AsciiDoc to HTML"))
+    val convertButton = new Button("Convert")
+    convertButton.setTooltip(new Tooltip("Convert AsciiDoc to HTML"))
+
+    val previewButton = new Button("Preview")
+    previewButton.setTooltip(new Tooltip("Preview HTML"))
 
     // BOTTOM HBOX
     configureBottomHBoxGeometry(bottomHbox)
-    addWidgetsToBottomHbox(bottomHbox, convertAscButton)
+    addWidgetsToBottomHbox(bottomHbox, convertButton, previewButton)
 
     // GRID PANE CONFIG
     configureGridPaneGeometry(this)

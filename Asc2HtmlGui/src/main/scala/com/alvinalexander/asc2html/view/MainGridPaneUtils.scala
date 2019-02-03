@@ -70,9 +70,10 @@ object MainGridPaneUtils {
 
     def addWidgetsToBottomHbox(
         bottomHbox: HBox,
-        convertAsciidocToHtmlButton: Button
+        convertAsciidocToHtmlButton: Button,
+        previewHtmlButton: Button
     ): Unit = {
-        bottomHbox.getChildren.addAll(convertAsciidocToHtmlButton)
+        bottomHbox.getChildren.addAll(convertAsciidocToHtmlButton, previewHtmlButton)
     }
 
 
