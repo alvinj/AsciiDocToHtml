@@ -35,7 +35,7 @@ extends EventHandler[ActionEvent] {
 
     }
 
-    private def updateGui(html: String): Unit = {
+    def updateGui(html: String): Unit = {
         val runnable = new Runnable {
             override def run(): Unit = {
                 val htmlPane = new HtmlDialogPane
@@ -47,7 +47,7 @@ extends EventHandler[ActionEvent] {
     }
 
     //TODO this code is a dup from the other projects, refactor it
-    private def convertAsciidocToHtml(asciidoc: String): String = {
+    def convertAsciidocToHtml(asciidoc: String): String = {
 
         val asciidoctor: Asciidoctor = Asciidoctor.Factory.create
         val html: String = asciidoctor
