@@ -9,7 +9,7 @@ echo "Running 'sbt assembly' ..."
 sbt assembly
 if [ $? != 0 ]
 then
-echo "SBT-ASSEMBLY FAILED, STOPPING BUILD PROCESS"
+  echo "SBT-ASSEMBLY FAILED, STOPPING BUILD PROCESS"
   exit 1
 fi
 echo "\n"
@@ -21,11 +21,11 @@ echo "\n"
 echo "Running javapackager ..."
 # SEE https://docs.oracle.com/javase/8/docs/technotes/tools/unix/javapackager.html
 JAVA_HOME=`/usr/libexec/java_home -v 1.8`
-APP_DIR_NAME=Notes.app
-APP_NAME=Notes
-ICON_FILE=build/Notes.icns
-APP_MAIN=com.alvinalexander.notes.NotesMain
-INPUT_JAR_FILE=target/scala-2.12/Notes-assembly-1.0.jar
+APP_DIR_NAME=Asc2Html.app
+APP_NAME=Asc2Html
+ICON_FILE=build/Asc2Html.icns
+APP_MAIN=com.alvinalexander.asc2html.Asc2HtmlGui
+INPUT_JAR_FILE=target/scala-2.12/AsciiDocToHtmlGui-assembly-0.1.jar
 
 # javapackager command notes:
 #   - '-native image' creates a ".app" file (as opposed to DMG or other)

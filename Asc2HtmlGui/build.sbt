@@ -12,3 +12,14 @@ libraryDependencies ++= Seq(
     "org.jsoup" % "jsoup" % "1.11.3"
 )
 
+assemblyMergeStrategy in assembly := {
+  case PathList("javax", "servlet", xs @ _*)         => MergeStrategy.first
+  case PathList(ps @ _*) if ps.last endsWith ".html" => MergeStrategy.first
+  case "application.conf"                            => MergeStrategy.concat
+  case "module-info.class"                           => MergeStrategy.rename
+  case x =>
+    val oldStrategy = (assemblyMergeStrategy in assembly).value
+    oldStrategy(x)
+}
+
+
