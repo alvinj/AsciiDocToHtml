@@ -1,24 +1,70 @@
 package com.alvinalexander.asc2html.actions
 
+import java.util.{HashMap => JHashMap}
+
+import scala.concurrent.{Future => ConcurrentTask}
+import scala.concurrent.ExecutionContext.Implicits.global
+import asc2html.Asc2HtmlUtils
 import javafx.event.{ActionEvent, EventHandler}
 import com.alvinalexander.asc2html.controller.MainController
 import com.alvinalexander.asc2html.view.{GuiUtils, HtmlDialogPane}
+import javafx.application.Platform
+import javafx.concurrent.Task
+import org.asciidoctor.Asciidoctor
+import org.jsoup.Jsoup
+import org.jsoup.safety.Whitelist
+import javafx.application.Platform
+
+import scala.util.{Failure, Success}
 
 class ConvertButtonHandler (mainController: MainController)
 extends EventHandler[ActionEvent] {
 
     override def handle(event: ActionEvent): Unit = {
-        //TODO
-        // get asciidoc text from the text area
+
         val asciidoc = mainController.mainGridPane.textArea.getText
 
-        // TODO convert asciidoc to html
-        val html = "Hello, world"
+        // conversion can take a while (much faster after run once)
+        val task: ConcurrentTask[String] = ConcurrentTask {
+            val html = convertAsciidocToHtml(asciidoc)
+            html
+        }
 
-        // show the html in a new dialog
-        val htmlPane = new HtmlDialogPane
-        htmlPane.htmlTextArea.setText(html)
-        GuiUtils.showHtmlDialog("Your HTML", htmlPane)
+        task.onComplete {
+            case Success(html) => updateGui(html)
+            case Failure(e) => updateGui(e.getMessage)
+        }
+
+    }
+
+    private def updateGui(html: String): Unit = {
+        val runnable = new Runnable {
+            override def run(): Unit = {
+                val htmlPane = new HtmlDialogPane
+                htmlPane.htmlTextArea.setText(html)
+                GuiUtils.showHtmlDialog("Your HTML", htmlPane)
+            }
+        }
+        Platform.runLater(runnable)
+    }
+
+    //TODO this code is a dup from the other projects, refactor it
+    private def convertAsciidocToHtml(asciidoc: String): String = {
+
+        val asciidoctor: Asciidoctor = Asciidoctor.Factory.create
+        val html: String = asciidoctor
+            .convert(
+                asciidoc,
+                new JHashMap[String, Object]()
+            )
+
+        val wl = Whitelist.simpleText  //allows b, em, i, strong, & u
+        Asc2HtmlUtils.configureWhitelistTagsToKeep(wl)
+        Asc2HtmlUtils.configureWhitelistAttributes(wl)
+
+        val cleanButUglyHtml = Jsoup.clean(html, wl)
+        val prettierHtml = Asc2HtmlUtils.insertBlankLinesBeforeHtmlTags(cleanButUglyHtml)
+        prettierHtml
 
     }
 

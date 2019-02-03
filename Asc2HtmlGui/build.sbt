@@ -7,7 +7,8 @@ scalaVersion := "2.12.8"
 scalacOptions += "-deprecation"
 
 libraryDependencies ++= Seq(
-    "org.scalactic" %% "scalactic" % "3.0.5",
-    "org.scalatest" %% "scalatest" % "3.0.5" % "test"
+    "org.scalatest" %% "scalatest" % "3.0.5" % "test",
+    "org.asciidoctor" % "asciidoctorj" % "1.6.1",
+    "org.jsoup" % "jsoup" % "1.11.3"
 )
 
